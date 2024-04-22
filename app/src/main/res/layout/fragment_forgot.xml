@@ -6,7 +6,7 @@
     android:fillViewport="true"
     android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".presenter.auth.forgot.ForgotFragment">
+    tools:context=".presenter.auth.recover.RecoverFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

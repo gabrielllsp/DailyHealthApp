@@ -4,11 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.gabriel.dailyhealthapp.R
 import com.gabriel.dailyhealthapp.databinding.FragmentLoginBinding
+import com.gabriel.dailyhealthapp.util.FirebaseHelper
+import com.gabriel.dailyhealthapp.util.StateView
+import com.gabriel.dailyhealthapp.util.showButtonSheet
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -16,6 +20,7 @@ class LoginFragment : Fragment() {
 
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
+    private val loginViewModel: LoginViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,12 +53,39 @@ class LoginFragment : Fragment() {
 
         if (email.isNotEmpty()) {
             if (password.isNotEmpty()) {
-                Toast.makeText(requireContext(), " login...", Toast.LENGTH_SHORT).show()
+                loginUser(email, password)
             } else {
-                Toast.makeText(requireContext(), "Digite sua senha", Toast.LENGTH_SHORT).show()
+                showButtonSheet(message = getString(R.string.text_password_empty))
             }
         } else {
-            Toast.makeText(requireContext(), "Digite seu e-mail", Toast.LENGTH_SHORT).show()
+            showButtonSheet(message = getString(R.string.text_email_empty))
+        }
+    }
+
+    private fun loginUser(email: String, password: String) {
+        loginViewModel.login(email, password).observe(viewLifecycleOwner) { stateView ->
+            when (stateView) {
+                is StateView.Loading -> {
+                    binding.progressLoading.isVisible = true
+                }
+
+                is StateView.Sucess -> {
+                    binding.progressLoading.isVisible = false
+
+                    findNavController().navigate(R.id.action_global_homeFragment)
+                }
+
+                is StateView.Error -> {
+                    binding.progressLoading.isVisible = false
+                    showButtonSheet(
+                        message = getString(
+                            FirebaseHelper.validError(
+                                stateView.message ?: ""
+                            )
+                        )
+                    )
+                }
+            }
         }
     }
 

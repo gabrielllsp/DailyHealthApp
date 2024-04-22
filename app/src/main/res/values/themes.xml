@@ -33,6 +33,14 @@
         <item name="android:textColorHint">#9E9E9E</item>
     </style>
 
+    <style name="BottomSheetDialog" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/bottomSheetStyleWapper</item>
+    </style>
+
+    <style name="bottomSheetStyleWapper" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
 
     <style name="Theme.DailyHealthApp" parent="Base.Theme.DailyHealthApp" />
 </resources>

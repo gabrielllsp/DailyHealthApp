@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.gabriel.dailyhealthapp.R
+import com.gabriel.dailyhealthapp.databinding.LayoutBottomSheetBinding
+import com.google.android.material.bottomsheet.BottomSheetDialog
 
 fun Fragment.initToolbar(
     toolbar: Toolbar,
@@ -25,4 +27,27 @@ fun Fragment.initToolbar(
         activity?.onBackPressedDispatcher?.onBackPressed()
     }
 
+}
+
+fun Fragment.showButtonSheet(
+    titleDialog: Int? = null,
+    titleButton: Int? = null,
+    message: String,
+    onClick: () -> Unit = {}
+) {
+    val bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.BottomSheetDialog)
+    val bottomSheetBinding: LayoutBottomSheetBinding =
+        LayoutBottomSheetBinding.inflate(layoutInflater, null, false)
+
+    bottomSheetBinding.textTitle.text = getString(titleDialog ?: R.string.text_title_bottom_sheet)
+    bottomSheetBinding.textMessage.text = message
+    bottomSheetBinding.btnOk.text = getString(titleDialog ?: R.string.text_button_bottom_sheet)
+
+    bottomSheetBinding.btnOk.setOnClickListener {
+        bottomSheetDialog.dismiss()
+        onClick()
+    }
+
+    bottomSheetDialog.setContentView(bottomSheetBinding.root)
+    bottomSheetDialog.show()
 }
