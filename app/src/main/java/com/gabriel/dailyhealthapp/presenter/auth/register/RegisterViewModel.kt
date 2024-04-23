@@ -2,7 +2,6 @@ package com.gabriel.dailyhealthapp.presenter.auth.register
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
-import com.gabriel.dailyhealthapp.data.model.User
 import com.gabriel.dailyhealthapp.domain.auth.RegisterUseCase
 import com.gabriel.dailyhealthapp.util.StateView
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,11 +12,16 @@ import javax.inject.Inject
 class RegisterViewModel @Inject constructor(
     private val resisterUseCase: RegisterUseCase
 ): ViewModel() {
-    fun register(user: User) = liveData(Dispatchers.IO) {
+    fun register(
+        name: String,
+        email: String,
+        password: String
+    ) = liveData(Dispatchers.IO) {
         try {
             emit(StateView.Loading())
-            resisterUseCase.invoke(user)
+            val user = resisterUseCase.invoke(name, email, password)
             emit(StateView.Sucess(user))
+
         } catch (ex: Exception) {
             emit(StateView.Error(ex.message))
         }

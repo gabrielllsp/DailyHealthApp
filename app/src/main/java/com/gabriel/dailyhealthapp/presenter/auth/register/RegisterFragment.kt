@@ -1,6 +1,8 @@
 package com.gabriel.dailyhealthapp.presenter.auth.register
 
 import android.os.Bundle
+
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.gabriel.dailyhealthapp.R
 import com.gabriel.dailyhealthapp.data.model.User
 import com.gabriel.dailyhealthapp.databinding.FragmentRegisterBinding
+import com.gabriel.dailyhealthapp.presenter.profile.ProfileViewModel
 import com.gabriel.dailyhealthapp.util.FirebaseHelper
 import com.gabriel.dailyhealthapp.util.StateView
 import com.gabriel.dailyhealthapp.util.initToolbar
@@ -23,7 +26,7 @@ class RegisterFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val registerViewModel: RegisterViewModel by viewModels()
-
+    private val profileViewModel: ProfileViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,8 +55,7 @@ class RegisterFragment : Fragment() {
             if (email.isNotEmpty()) {
                 if (password.isNotEmpty()) {
 
-                    val user = User(name, email, password)
-                    registerUser(user)
+                    registerUser(name, email, password)
 
                 } else {
                     showButtonSheet(message = getString(R.string.text_password_empty))
@@ -67,17 +69,17 @@ class RegisterFragment : Fragment() {
         }
     }
 
-    private fun registerUser(user: User) {
+    private fun registerUser(name: String, email: String, password: String) {
 
-        registerViewModel.register(user).observe(viewLifecycleOwner) { stateView ->
+        registerViewModel.register(name, email, password).observe(viewLifecycleOwner) { stateView ->
             when (stateView) {
                 is StateView.Loading -> {
                     binding.progressLoading.isVisible = true
                 }
 
                 is StateView.Sucess -> {
-                    binding.progressLoading.isVisible = false
-                    findNavController().navigate(R.id.action_global_homeFragment)
+                    stateView.data?.let { saveProfile(it) }
+
                 }
 
                 is StateView.Error -> {
@@ -93,6 +95,32 @@ class RegisterFragment : Fragment() {
             }
         }
 
+    }
+
+    private fun saveProfile(user: User) {
+        profileViewModel.saveProfile(user).observe(viewLifecycleOwner) { stateView ->
+            when (stateView) {
+                is StateView.Loading -> {}
+
+                is StateView.Sucess -> {
+                    binding.progressLoading.isVisible = false
+                    findNavController().navigate(R.id.action_global_homeFragment)
+
+
+                }
+
+                is StateView.Error -> {
+                    binding.progressLoading.isVisible = false
+                    showButtonSheet(
+                        message = getString(
+                            FirebaseHelper.validError(
+                                stateView.message ?: ""
+                            )
+                        )
+                    )
+                }
+            }
+        }
     }
 
     override fun onDestroy() {

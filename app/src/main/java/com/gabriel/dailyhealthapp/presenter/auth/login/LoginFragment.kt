@@ -38,13 +38,15 @@ class LoginFragment : Fragment() {
     }
 
     private fun initListeners() {
+        binding.btnLogin.setOnClickListener { validateData() }
+
         binding.btnForgot.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_forgotFragment)
         }
         binding.btnRegister.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
         }
-        binding.btnLogin.setOnClickListener { validateData() }
+
     }
 
     private fun validateData() {
@@ -70,8 +72,6 @@ class LoginFragment : Fragment() {
                 }
 
                 is StateView.Sucess -> {
-                    binding.progressLoading.isVisible = false
-
                     findNavController().navigate(R.id.action_global_homeFragment)
                 }
 
@@ -88,7 +88,6 @@ class LoginFragment : Fragment() {
             }
         }
     }
-
     override fun onDestroy() {
         super.onDestroy()
         _binding = null

@@ -2,7 +2,6 @@ package com.gabriel.dailyhealthapp.data.repository.auth
 
 import com.gabriel.dailyhealthapp.data.model.User
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import javax.inject.Inject
 import kotlin.coroutines.suspendCoroutine
 
@@ -25,12 +24,23 @@ class AuthFirebaseDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun register(user: User): User {
+    override suspend fun register(name: String, email: String, password: String): User {
         return suspendCoroutine { continuation ->
-            firebaseAuth.createUserWithEmailAndPassword(user.email, user.password)
+            firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
+
+                        val userId = task.result.user?.uid ?: ""
+                        val user = User(
+                            id = userId,
+                            name = name,
+                            email = email,
+                            password = password
+                        )
                             continuation.resumeWith(Result.success(user))
+
+
+
                     } else {
                         task.exception?.let {
                             continuation.resumeWith(Result.failure(it))

@@ -10,7 +10,9 @@ interface AuthFirebaseDataSource {
     )
 
     suspend fun register(
-        user: User
+        name: String,
+        email: String,
+        password: String
     ): User
 
     suspend fun recover(
