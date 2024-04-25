@@ -1,4 +1,4 @@
-# Movie App
+# Daily Health
 Desafio tcnico.
 O aplicativo está em desenvolvimento, abaixo algumas telas que estão prontas.
 
