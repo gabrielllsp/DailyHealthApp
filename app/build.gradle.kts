@@ -4,6 +4,7 @@ plugins {
     id("com.google.gms.google-services")
     id ("kotlin-kapt")
     alias(libs.plugins.hilt.android)
+    id("kotlin-parcelize")
 }
 
 android {

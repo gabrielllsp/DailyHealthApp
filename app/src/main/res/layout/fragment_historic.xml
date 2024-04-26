@@ -3,13 +3,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".presenter.tabs.HomeFragment">
+    android:fillViewport="true"
+    tools:context=".presenter.tabs.HistoricFragment">
 
+    <TextView
+        android:id="@+id/text_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="@string/title_history_fragment"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_comments"
+        android:id="@+id/recycler_arm"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:paddingVertical="16dp"
@@ -17,7 +29,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/training_item" />
+        app:layout_constraintTop_toBottomOf="@id/text_title"
+        tools:listitem="@layout/item_exercise"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

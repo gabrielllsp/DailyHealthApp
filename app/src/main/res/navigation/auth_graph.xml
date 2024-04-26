@@ -41,20 +41,28 @@
             android:label="fragment_register"
             tools:layout="@layout/fragment_register" />
         <action
-            android:id="@+id/action_global_homeFragment"
-            app:destination="@id/homeFragment"
-            app:popUpToInclusive="true"
-            app:popUpTo="@id/onboardingFragment"/>
+            android:id="@+id/action_global_tabManagerFragment"
+            app:destination="@id/tabManagerFragment" />
     </navigation>
     <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.gabriel.dailyhealthapp.presenter.main.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
+        android:id="@+id/tabManagerFragment"
+        android:name="com.gabriel.dailyhealthapp.presenter.tabs.TabManagerFragment"
+        android:label="fragment_tab_manager"
+        tools:layout="@layout/fragment_tab_manager" >
         <action
-            android:id="@+id/action_homeFragment_to_chestFragment"
+            android:id="@+id/action_tabManagerFragment_to_chestFragment"
             app:destination="@id/chestFragment" />
+        <action
+            android:id="@+id/action_tabManagerFragment_to_authentication"
+            app:destination="@id/authentication"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/tabManagerFragment"/>
     </fragment>
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.gabriel.dailyhealthapp.presenter.tabs.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/chestFragment"
         android:name="com.gabriel.dailyhealthapp.presenter.exercise_details.ChestFragment"

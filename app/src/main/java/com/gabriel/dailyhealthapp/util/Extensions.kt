@@ -32,7 +32,7 @@ fun Fragment.initToolbar(
 fun Fragment.showButtonSheet(
     titleDialog: Int? = null,
     titleButton: Int? = null,
-    message: String,
+    message: String?,
     onClick: () -> Unit = {}
 ) {
     val bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.BottomSheetDialog)

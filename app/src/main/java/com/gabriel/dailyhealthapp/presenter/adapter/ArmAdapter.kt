@@ -1,15 +1,29 @@
-package com.gabriel.dailyhealthapp.presenter.exercise_details.adapter
+package com.gabriel.dailyhealthapp.presenter.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.gabriel.dailyhealthapp.databinding.TrainingItemBinding
+import com.gabriel.dailyhealthapp.presenter.model.ExerciseEntity
 import com.gabriel.dailyhealthapp.presenter.model.TrainingEntity
 
 
-class CategoriesAdapter(
-    private val itemList: List<TrainingEntity>
-) : RecyclerView.Adapter<CategoriesAdapter.MyViewHolder>() {
+class ArmAdapter(
+    private val context: Context,
+    private val itemList: List<ExerciseEntity>,
+//    private val itemSelected: (ExerciseEntity, Int) -> Unit
+) : RecyclerView.Adapter<ArmAdapter.MyViewHolder>() {
+
+//    companion object {
+//        val SELECT_NEXT: Int = 1
+//    }
+//
+//    private fun setIndicators(item: ExerciseEntity, holder: MyViewHolder){
+//        holder.binding.btnStart.setOnClickListener {
+//            itemSelected(item, SELECT_NEXT)
+//        }
+//    }
 
     inner class MyViewHolder(val binding: TrainingItemBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -21,7 +35,6 @@ class CategoriesAdapter(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
-
             )
         )
     }
@@ -32,9 +45,9 @@ class CategoriesAdapter(
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val newItem = itemList[position]
 
-        holder.binding.textName.text = newItem.name
+        holder.binding.textName.text = newItem.title
         holder.binding.textDescription.text = newItem.description
         holder.binding.trainingImage.setImageResource(newItem.image)
-
+//        setIndicators(newItem, holder)
         }
     }

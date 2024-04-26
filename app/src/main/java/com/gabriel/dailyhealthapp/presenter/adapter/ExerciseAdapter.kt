@@ -1,5 +1,6 @@
-package com.gabriel.dailyhealthapp.presenter.exercise_details.adapter
+package com.gabriel.dailyhealthapp.presenter.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -7,6 +8,7 @@ import com.gabriel.dailyhealthapp.databinding.ItemExerciseBinding
 import com.gabriel.dailyhealthapp.presenter.model.ExerciseEntity
 
 class ExerciseAdapter(
+    context: Context,
     private val itemList: List<ExerciseEntity>
 ) : RecyclerView.Adapter<ExerciseAdapter.MyViewHolder>() {
 
@@ -26,9 +28,10 @@ class ExerciseAdapter(
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val newItem = itemList[position]
 
-        holder.binding.textExercise.text = newItem.title
-        holder.binding.textSubtitle.text = newItem.description
-        holder.binding.imageExercise.setImageResource(newItem.image)
+        holder.binding.textName.text = newItem.title
+        holder.binding.textDescription.text = newItem.description
+        holder.binding.imageView2.setImageResource(newItem.image)
+
     }
 
     inner class MyViewHolder(val binding: ItemExerciseBinding) :

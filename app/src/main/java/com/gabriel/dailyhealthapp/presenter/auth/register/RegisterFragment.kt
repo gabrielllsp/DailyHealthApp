@@ -104,7 +104,7 @@ class RegisterFragment : Fragment() {
 
                 is StateView.Sucess -> {
                     binding.progressLoading.isVisible = false
-                    findNavController().navigate(R.id.action_global_homeFragment)
+                    findNavController().navigate(R.id.action_global_tabManagerFragment)
 
 
                 }
